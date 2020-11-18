@@ -1,0 +1,250 @@
+{
+	"info": {
+		"_postman_id": "cdf552f7-3bad-44bf-9d66-76a917e9c8c7",
+		"name": ".Net5",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST TodoItem",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fdf51d13-1c17-4787-83bb-8f9412f6e5c6",
+						"exec": [
+							"//Uses testEnv environment\r",
+							"let jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.set(\"new-item-id\", jsonData.id);\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\":\"walk dog\",\r\n  \"isComplete\":true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44384/api/todoItems",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44384",
+					"path": [
+						"api",
+						"todoItems"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET TodoItem",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5bd1ea9d-bc47-42a7-925a-1af485f434f9",
+						"exec": [
+							"pm.test(\"Task name should be 'walk dog'\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.name).to.eql(\"walk dog\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Task isComplete should be true\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.isComplete).to.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44384/api/todoItems/{{new-item-id}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44384",
+					"path": [
+						"api",
+						"todoItems",
+						"{{new-item-id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT TodoItem",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "086ae8a7-64da-4fd5-846d-a990125a605e",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{new-item-id}}\",\r\n  \"name\":\"walk cat\",\r\n  \"isComplete\":false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44384/api/todoItems/{{new-item-id}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44384",
+					"path": [
+						"api",
+						"todoItems",
+						"{{new-item-id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET modified TodoItem",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fb5aac6c-9ad0-4c57-819e-23b37bcf3c1a",
+						"exec": [
+							"pm.test(\"Task name should be 'walk cat'\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.name).to.eql(\"walk cat\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Task isComplete should be false\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.isComplete).to.eql(false);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44384/api/todoItems/{{new-item-id}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44384",
+					"path": [
+						"api",
+						"todoItems",
+						"{{new-item-id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE TodoItem",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a1e11d65-9346-49dd-86ba-36a4ba812d5d",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\":\"walk dog\",\r\n  \"isComplete\":true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44384/api/todoItems/{{new-item-id}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44384",
+					"path": [
+						"api",
+						"todoItems",
+						"{{new-item-id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
